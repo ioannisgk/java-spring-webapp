@@ -70,19 +70,20 @@ pipeline {
           withCredentials([usernamePassword(
             credentialsId: 'github-credentials',
             usernameVariable: 'USERNAME',
-            passwordVariable: 'PASSWORD')]) {
-            sh '''
-              mkdir temp && cd temp
-              git config --global user.email ${GIT_EMAIL}
-              git config --global user.name ${GIT_USERNAME}
-              git init
-              git clone https://$USERNAME:$PASSWORD@${GIT_REPOSITORY}
-              git remote add origin https://${GIT_REPOSITORY}
-              git branch -M main
-              cd kubernetes-infrastructure
-              ls -last
-            '''
-          }
+            passwordVariable: 'PASSWORD')])
+            {
+              sh '''
+                mkdir temp && cd temp
+                git config --global user.email ${GIT_EMAIL}
+                git config --global user.name ${GIT_USERNAME}
+                git init
+                git clone https://$USERNAME:$PASSWORD@${GIT_REPOSITORY}
+                git remote add origin https://${GIT_REPOSITORY}
+                git branch -M main
+                cd kubernetes-infrastructure
+                ls -last
+              '''
+            }
         }
       }
     }
