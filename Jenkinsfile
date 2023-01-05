@@ -65,9 +65,11 @@ pipeline {
     stage('Deploy to Kubernetes') {
       steps {
         container('git') {
-          sh '''
-            git clone https://github.com/ioannisgk/kubernetes-infrastructure.git
-          '''
+          withCredentials([usernamePassword(credentialsId: 'github-credentials', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
+            sh '''
+              git clone https://$USERNAME:$PASSWORD@github.com/ioannisgk/kubernetes-infrastructure.git
+            '''
+          }
         }
       }
     }
