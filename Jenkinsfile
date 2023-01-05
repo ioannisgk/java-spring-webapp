@@ -1,4 +1,7 @@
 pipeline {
+  environment {
+    REGISTRY_REPOSITORY = "ioannisgk/hello-kaniko"
+  }
   agent {
     kubernetes {
       yaml '''
