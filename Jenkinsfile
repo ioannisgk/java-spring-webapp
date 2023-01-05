@@ -37,7 +37,7 @@ pipeline {
     }
   }
   stages {
-    stage('Application Build') {
+    stage('Build Application') {
       steps {
         container('maven') {
           sh '''
@@ -53,6 +53,15 @@ pipeline {
           sh '''
             ls -last
             /kaniko/executor --context . --destination ${REGISTRY_REPOSITORY}:v0.0${BUILD_NUMBER}
+          '''
+        }
+      }
+    }
+    stage('Deploy to Kubernetes') {
+      steps {
+        container('default') {
+          sh '''
+            cat /etc/*ease
           '''
         }
       }
