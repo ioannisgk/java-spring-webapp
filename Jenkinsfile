@@ -66,7 +66,7 @@ pipeline {
       steps {
         container('git') {
           sh '''
-            cat /etc/*ease
+            git clone https://github.com/ioannisgk/kubernetes-infrastructure.git
           '''
         }
       }
