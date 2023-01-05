@@ -67,7 +67,10 @@ pipeline {
     stage('Deploy to Kubernetes') {
       steps {
         container('git') {
-          withCredentials([usernamePassword(credentialsId: 'github-credentials', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
+          withCredentials([usernamePassword(
+            credentialsId: 'github-credentials',
+            usernameVariable: 'USERNAME',
+            passwordVariable: 'PASSWORD')]) {
             sh '''
               mkdir temp && cd temp
               git config --global user.email ${GIT_EMAIL}
