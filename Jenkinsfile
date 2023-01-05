@@ -13,6 +13,7 @@ pipeline {
             tty: true
         '''
     }
+  }
   stages {
     stage('Application Build') {
       steps {
