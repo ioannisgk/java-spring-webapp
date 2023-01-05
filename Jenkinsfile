@@ -1,6 +1,6 @@
 pipeline {
   environment {
-    REGISTRY_REPOSITORY = "ioannisgk/hello-kaniko"
+    REGISTRY_REPOSITORY = "ioannisgk/spring-demo"
     GIT_EMAIL="jenkins@email.com"
     GIT_USERNAME="jenkins"
     GIT_REPOSITORY="github.com/ioannisgk/kubernetes-infrastructure.git"
