@@ -24,6 +24,11 @@ pipeline {
             volumeMounts:
               - name: jenkins-docker-cfg
                 mountPath: /kaniko/.docker
+          - name: git
+            image: alpine/git:2.36.3
+            command:
+            - cat
+            tty: true
           volumes:
           - name: jenkins-docker-cfg
             projected:
@@ -59,7 +64,7 @@ pipeline {
     }
     stage('Deploy to Kubernetes') {
       steps {
-        container('default') {
+        container('git') {
           sh '''
             cat /etc/*ease
           '''
