@@ -3,6 +3,7 @@ pipeline {
     REGISTRY_REPOSITORY = "ioannisgk/hello-kaniko"
     GIT_EMAIL="jenkins@email.com"
     GIT_USERNAME="jenkins"
+    GIT_REPOSITORY="github.com/ioannisgk/kubernetes-infrastructure.git"
   }
   agent {
     kubernetes {
@@ -73,7 +74,10 @@ pipeline {
               git config --global user.email ${GIT_EMAIL}
               git config --global user.name ${GIT_USERNAME}
               git init
-              git clone https://$USERNAME:$PASSWORD@github.com/ioannisgk/kubernetes-infrastructure.git
+              git clone https://$USERNAME:$PASSWORD@${GIT_REPOSITORY}
+              git remote add origin https://${GIT_REPOSITORY}
+              git branch -M main
+              cd kubernetes-infrastructure
               ls -last
             '''
           }
