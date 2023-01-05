@@ -11,6 +11,25 @@ pipeline {
             command:
             - cat
             tty: true
+          - name: kaniko
+            image: gcr.io/kaniko-project/executor:debug
+            imagePullPolicy: Always
+            command:
+            - sleep
+            args:
+            - 9999999
+            volumeMounts:
+              - name: jenkins-docker-cfg
+                mountPath: /kaniko/.docker
+          volumes:
+          - name: jenkins-docker-cfg
+            projected:
+              sources:
+              - secret:
+                  name: docker-credentials
+                  items:
+                    - key: .dockerconfigjson
+                      path: config.json
         '''
     }
   }
@@ -21,7 +40,17 @@ pipeline {
           sh '''
             mvn -v
             mvn clean install
+            #ls -last
+          '''
+        }
+      }
+    }
+    stage('Kaniko Build & Push Image') {
+      steps {
+        container('kaniko') {
+          sh '''
             ls -last
+            /kaniko/executor --context . --destination ${REGISTRY_REPOSITORY}:v0.0${BUILD_NUMBER}
           '''
         }
       }
