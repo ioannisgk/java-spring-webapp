@@ -40,7 +40,6 @@ pipeline {
           sh '''
             mvn -v
             mvn clean install
-            #ls -last
           '''
         }
       }
