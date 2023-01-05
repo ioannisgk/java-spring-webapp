@@ -1,15 +1,18 @@
 pipeline {
   agent {
       kubernetes {
-          inheritFrom 'default'
+          inheritFrom 'maven'
       }
   }
   stages {
-    stage('Checkout Source') {
+    stage('Application Build') {
       steps {
-        echo "Before"
-        sh 'ls -last'
-        
+        container('maven') {
+          sh '''
+            mvn clean install
+            ls -last
+          '''
+        }
       }
     }
   }
