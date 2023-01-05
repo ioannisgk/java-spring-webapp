@@ -1,6 +1,8 @@
 pipeline {
   environment {
     REGISTRY_REPOSITORY = "ioannisgk/hello-kaniko"
+    GIT_EMAIL="jenkins@email.com"
+    GIT_USERNAME="jenkins"
   }
   agent {
     kubernetes {
@@ -67,7 +69,12 @@ pipeline {
         container('git') {
           withCredentials([usernamePassword(credentialsId: 'github-credentials', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
             sh '''
+              mkdir temp && cd temp
+              git config --global user.email ${GIT_EMAIL}
+              git config --global user.name ${GIT_USERNAME}
+              git init
               git clone https://$USERNAME:$PASSWORD@github.com/ioannisgk/kubernetes-infrastructure.git
+              ls -last
             '''
           }
         }
