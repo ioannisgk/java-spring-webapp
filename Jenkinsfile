@@ -19,7 +19,7 @@ pipeline {
     """)
     GIT_CHECK = sh(returnStdout: true, script: """
       #!/bin/bash
-      cd temp
+      ls
       #git config --list > a.txt
       
     """)
