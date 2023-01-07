@@ -97,7 +97,7 @@ pipeline {
               }
               sh '''
                 ls -last
-                cat a.txt
+                #cat a.txt
                 echo "DONE!!!"
               '''
             }
