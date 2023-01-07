@@ -88,7 +88,7 @@ pipeline {
             {
               script {
                 GIT_CLONE_REPOSITORY
-                GIT_CHECK
+                //GIT_CHECK
               }
               sh '''
                 ls -last temp
