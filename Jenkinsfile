@@ -18,7 +18,8 @@ pipeline {
     """)
     GIT_PUSH_REPOSITORY = sh(returnStdout: false, script: """
       #!/bin/bash
-      pwd > a.txt
+      cd temp
+      git config --list > a.txt
     """)
   }
   agent {
