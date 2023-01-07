@@ -1,26 +1,9 @@
 pipeline {
   environment {
     REGISTRY_REPOSITORY = "ioannisgk/spring-demo"
-    GIT_EMAIL = "jenkins@email.com"
-    GIT_USERNAME = "jenkins"
-    GIT_REPOSITORY = "github.com/ioannisgk/kubernetes-infrastructure.git"
-    GIT_CREDS = credentials('github-credentials')
-    GIT_CLONE_REPOSITORY = sh(returnStdout: false, script: """
-      #!/bin/bash
-      mkdir temp && cd temp
-      git config --global user.email ${GIT_EMAIL}
-      git config --global user.name ${GIT_USERNAME}
-      git init
-      git clone https://${GIT_CREDS_USR}:${GIT_CREDS_PSW}@${GIT_REPOSITORY}
-      git remote add origin https://${GIT_REPOSITORY}
-      git branch -M main
-      cd kubernetes-infrastructure   
-    """)
-    GIT_PUSH_REPOSITORY = sh(returnStdout: false, script: """
-      #!/bin/bash
-      cd temp
-      ls > a.txt
-    """)
+    GIT_EMAIL="jenkins@email.com"
+    GIT_USERNAME="jenkins"
+    GIT_REPOSITORY="github.com/ioannisgk/kubernetes-infrastructure.git"
   }
   agent {
     kubernetes {
@@ -89,15 +72,16 @@ pipeline {
             usernameVariable: 'USERNAME',
             passwordVariable: 'PASSWORD')])
             {
-              script {
-                GIT_CLONE_REPOSITORY
-                echo "1st script run"
-                GIT_PUSH_REPOSITORY
-              }
               sh '''
+                mkdir temp && cd temp
+                git config --global user.email ${GIT_EMAIL}
+                git config --global user.name ${GIT_USERNAME}
+                git init
+                git clone https://$USERNAME:$PASSWORD@${GIT_REPOSITORY}
+                git remote add origin https://${GIT_REPOSITORY}
+                git branch -M main
+                cd kubernetes-infrastructure
                 ls -last
-                cat a.txt
-                echo "DONE!!!"
               '''
             }
         }
