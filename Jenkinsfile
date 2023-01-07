@@ -16,7 +16,7 @@ pipeline {
       git branch -M main
       cd kubernetes-infrastructure   
     """)
-    GIT_CHECK = sh(returnStdout: true, script: """
+    GIT_REPO_CHECK = sh(returnStdout: true, script: """
       #!/bin/bash
       pwd > a.txt
     """)
@@ -90,7 +90,8 @@ pipeline {
             {
               script {
                 GIT_CLONE_REPOSITORY
-                //GIT_CHECK
+                echo "1st script run"
+                GIT_REPO_CHECK
               }
               sh '''
                 ls -last
