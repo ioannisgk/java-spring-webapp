@@ -15,11 +15,11 @@ pipeline {
       git remote add origin https://${GIT_REPOSITORY}
       git branch -M main
       cd kubernetes-infrastructure   
-    """);
+    """)
     GIT_CLONE_REPOSITORY2 = sh(returnStdout: true, script: '''
       #!/bin/bash
       echo "test" > a.txt
-    ''');
+    ''').trim()
   }
   agent {
     kubernetes {
