@@ -18,7 +18,7 @@ pipeline {
     """);
     GIT_CLONE_REPOSITORY2 = sh(returnStdout: true, script: """
       #!/bin/bash
-      pwd > a.txt
+      pwd
     """);
   }
   agent {
@@ -95,7 +95,7 @@ pipeline {
               }
               sh '''
                 ls -last
-                #cat a.txt
+                
                 echo "DONE!!!"
               '''
             }
