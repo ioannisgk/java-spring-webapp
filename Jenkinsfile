@@ -14,14 +14,11 @@ pipeline {
       git clone https://${GIT_CREDS_USR}:${GIT_CREDS_PSW}@${GIT_REPOSITORY}
       git remote add origin https://${GIT_REPOSITORY}
       git branch -M main
-      cd kubernetes-infrastructure
-      
+      cd kubernetes-infrastructure   
     """)
     GIT_CHECK = sh(returnStdout: true, script: """
       #!/bin/bash
       pwd > a.txt
-      
-      
     """)
   }
   agent {
@@ -93,7 +90,7 @@ pipeline {
             {
               script {
                 GIT_CLONE_REPOSITORY
-                GIT_CHECK
+                //GIT_CHECK
               }
               sh '''
                 ls -last
