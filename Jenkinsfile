@@ -16,9 +16,9 @@ pipeline {
       git branch -M main
       cd kubernetes-infrastructure   
     """)
-    GIT_CLONE_REPOSITORY2 = sh(returnStdout: false, script: """
+    GIT_PUSH_REPOSITORY = sh(returnStdout: false, script: """
       #!/bin/bash
-      echo "test" > a.txt
+      pwd > a.txt
     """)
   }
   agent {
@@ -91,11 +91,11 @@ pipeline {
               script {
                 //GIT_CLONE_REPOSITORY
                 echo "1st script run"
-                GIT_CLONE_REPOSITORY2
+                GIT_PUSH_REPOSITORY
               }
               sh '''
                 ls -last
-                
+                cat a.txt
                 echo "DONE!!!"
               '''
             }
