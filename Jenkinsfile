@@ -89,7 +89,7 @@ pipeline {
             passwordVariable: 'PASSWORD')])
             {
               script {
-                GIT_CLONE_REPOSITORY
+                //GIT_CLONE_REPOSITORY
                 echo "1st script run"
                 GIT_REPO_CHECK
               }
