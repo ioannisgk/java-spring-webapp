@@ -1,9 +1,22 @@
 pipeline {
   environment {
     REGISTRY_REPOSITORY = "ioannisgk/spring-demo"
-    GIT_EMAIL="jenkins@email.com"
-    GIT_USERNAME="jenkins"
-    GIT_REPOSITORY="github.com/ioannisgk/kubernetes-infrastructure.git"
+    GIT_EMAIL = "jenkins@email.com"
+    GIT_USERNAME = "jenkins"
+    GIT_REPOSITORY = "github.com/ioannisgk/kubernetes-infrastructure.git"
+    GIT_CREDS = credentials('github-credentials')
+    GIT_CLONE_REPOSITORY = sh(returnStdout: true, script: """
+      #!/bin/bash
+      mkdir temp && cd temp
+      git config --global user.email ${GIT_EMAIL}
+      git config --global user.name ${GIT_USERNAME}
+      git init
+      git clone https://${GIT_CREDS_USR}:${GIT_CREDS_PSW}@${GIT_REPOSITORY}
+      git remote add origin https://${GIT_REPOSITORY}
+      git branch -M main
+      cd kubernetes-infrastructure
+      ls -last
+    """)
   }
   agent {
     kubernetes {
@@ -49,7 +62,7 @@ pipeline {
         container('maven') {
           sh '''
             mvn -v
-            mvn clean install
+            #mvn clean install
           '''
         }
       }
@@ -59,7 +72,7 @@ pipeline {
         container('kaniko') {
           sh '''
             ls -last
-            /kaniko/executor --context . --destination ${REGISTRY_REPOSITORY}:v0.0${BUILD_NUMBER}
+            #/kaniko/executor --context . --destination ${REGISTRY_REPOSITORY}:v0.0${BUILD_NUMBER}
           '''
         }
       }
@@ -72,16 +85,11 @@ pipeline {
             usernameVariable: 'USERNAME',
             passwordVariable: 'PASSWORD')])
             {
+              script {
+                GIT_CLONE_REPOSITORY
+              }
               sh '''
-                mkdir temp && cd temp
-                git config --global user.email ${GIT_EMAIL}
-                git config --global user.name ${GIT_USERNAME}
-                git init
-                git clone https://$USERNAME:$PASSWORD@${GIT_REPOSITORY}
-                git remote add origin https://${GIT_REPOSITORY}
-                git branch -M main
-                cd kubernetes-infrastructure
-                ls -last
+                echo "DONE!!!"
               '''
             }
         }
