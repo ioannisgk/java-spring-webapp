@@ -16,7 +16,7 @@ pipeline {
       git branch -M main
       cd kubernetes-infrastructure
       ls -last
-    """)
+    """).trim()
   }
   agent {
     kubernetes {
