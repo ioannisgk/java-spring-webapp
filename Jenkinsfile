@@ -5,7 +5,7 @@ pipeline {
     GIT_USERNAME = "jenkins"
     GIT_REPOSITORY = "github.com/ioannisgk/kubernetes-infrastructure.git"
     GIT_CREDS = credentials('github-credentials')
-    GIT_CLONE_REPOSITORY = sh(returnStdout: true, script: """
+    GIT_CLONE_REPOSITORY = sh(returnStdout: false, script: """
       #!/bin/bash
       mkdir temp && cd temp
       git config --global user.email ${GIT_EMAIL}
@@ -16,10 +16,10 @@ pipeline {
       git branch -M main
       cd kubernetes-infrastructure   
     """)
-    GIT_CLONE_REPOSITORY2 = sh(returnStdout: false, script: '''
+    GIT_CLONE_REPOSITORY2 = sh(returnStdout: false, script: """
       #!/bin/bash
       echo "test" > a.txt
-    ''')
+    """)
   }
   agent {
     kubernetes {
