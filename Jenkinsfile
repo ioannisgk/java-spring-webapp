@@ -15,11 +15,11 @@ pipeline {
       git remote add origin https://${GIT_REPOSITORY}
       git branch -M main
       cd kubernetes-infrastructure   
-    """)
+    """);
     GIT_REPO_CHECK = sh(returnStdout: true, script: """
       #!/bin/bash
       pwd > a.txt
-    """)
+    """);
   }
   agent {
     kubernetes {
