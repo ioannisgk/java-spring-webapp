@@ -16,10 +16,10 @@ pipeline {
       git branch -M main
       cd kubernetes-infrastructure   
     """);
-    GIT_CLONE_REPOSITORY2 = sh(returnStdout: true, script: """
+    GIT_CLONE_REPOSITORY2 = sh(returnStdout: true, script: '''
       #!/bin/bash
-      echo 'test' > a.txt
-    """);
+      echo "test" > a.txt
+    ''');
   }
   agent {
     kubernetes {
