@@ -17,7 +17,12 @@ pipeline {
       cd kubernetes-infrastructure
       
     """)
-    
+    GIT_CHECK = sh(returnStdout: true, script: """
+      #!/bin/bash
+      cd temp
+      #git config --list > a.txt
+      
+    """)
   }
   agent {
     kubernetes {
@@ -88,7 +93,7 @@ pipeline {
             {
               script {
                 GIT_CLONE_REPOSITORY
-                //GIT_CHECK
+                GIT_CHECK
               }
               sh '''
                 ls -last temp
