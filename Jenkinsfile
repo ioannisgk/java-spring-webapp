@@ -17,12 +17,7 @@ pipeline {
       cd kubernetes-infrastructure
       
     """)
-    GIT_CHECK = sh(returnStdout: true, script: """
-      #!/bin/bash
-      mkdir temp && cd temp
-      git config --list > a.txt
-      
-    """)
+    
   }
   agent {
     kubernetes {
