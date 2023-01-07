@@ -96,8 +96,8 @@ pipeline {
                 GIT_CHECK
               }
               sh '''
-                ls -last temp
-                cat temp/a.txt
+                ls -last
+                cat a.txt
                 echo "DONE!!!"
               '''
             }
