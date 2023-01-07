@@ -19,7 +19,7 @@ pipeline {
     GIT_PUSH_REPOSITORY = sh(returnStdout: false, script: """
       #!/bin/bash
       cd temp
-      git config --list > a.txt
+      git status -s > a.txt
     """)
   }
   agent {
