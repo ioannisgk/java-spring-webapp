@@ -87,6 +87,9 @@ pipeline {
                 OLD_IMAGE_TAG=$(grep -E ${REGISTRY_REPOSITORY} ${DEPLOYMENT_FILE_PATH} | cut -d : -f 3)
                 sed -i -e "s/${OLD_IMAGE_TAG}/${NEW_IMAGE_TAG}/" ${DEPLOYMENT_FILE_PATH}
                 
+                cat ${DEPLOYMENT_FILE_PATH}
+                ls -last development/spring-app-demo/
+                
                 #git add .
                 #git commit -m "Update Spring demo app version to ${NEW_IMAGE_TAG}"
                 #git push -uf origin main 
