@@ -86,7 +86,7 @@ pipeline {
                 ls -last
                 
                 grep -E ${REGISTRY_REPOSITORY} ${DEPLOYMENT_FILE_PATH}
-                cut -d : -f 3 <<< "ghdghdg:fjfhj:333"
+                cut -d ":" -f 3 <<< "ghdghdg:fjfhj:333"
                 
                 #sed -i "s/${NEW_IMAGE_TAG}/${OLD_IMAGE_TAG}/" ${DEPLOYMENT_FILE_PATH}
               '''
