@@ -61,7 +61,7 @@ pipeline {
         container('kaniko') {
           sh '''
             ls -last
-            #/kaniko/executor --context . --destination ${REGISTRY_REPOSITORY}:v0.0${BUILD_NUMBER}
+            #/kaniko/executor --context . --destination ${REGISTRY_REPOSITORY}:${NEW_IMAGE_TAG}
           '''
         }
       }
@@ -84,8 +84,11 @@ pipeline {
                 git branch -M main
                 cd kubernetes-infrastructure
                 ls -last
-                echo ${NEW_IMAGE_TAG}
-                echo ${DEPLOYMENT_FILE_PATH}
+                
+                grep -E ${REGISTRY_REPOSITORY} ${DEPLOYMENT_FILE_PATH}
+                
+                
+                #sed -i "s/${NEW_IMAGE_TAG}/${OLD_IMAGE_TAG}/" ${DEPLOYMENT_FILE_PATH}
               '''
             }
         }
