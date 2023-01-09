@@ -4,6 +4,7 @@ pipeline {
     GIT_EMAIL = "ioannisgk@live.com"
     GIT_USERNAME = "ioannisgk"
     GIT_REPOSITORY = "github.com/ioannisgk/kubernetes-infrastructure.git"
+    GIT_BRANCH = "main"
     NEW_IMAGE_TAG = "v0.0${BUILD_NUMBER}"
     DEPLOYMENT_FILE_PATH = "development/spring-app-demo/spring-app-deployment.yaml"
   }
@@ -75,22 +76,25 @@ pipeline {
             passwordVariable: 'PASSWORD')])
             {
               sh '''
+                # Setup the git user and clone the repository
                 mkdir temp && cd temp
                 git config --global user.email ${GIT_EMAIL}
                 git config --global user.name ${GIT_USERNAME}
                 git init
                 git clone https://$USERNAME:$PASSWORD@${GIT_REPOSITORY}
                 git remote add origin https://${GIT_REPOSITORY}
-                git branch -M main
+                git branch -M ${GIT_BRANCH}
                 cd kubernetes-infrastructure
                 
+                # Find the old image tag and replace it with the new one
                 OLD_IMAGE_TAG=$(grep -E ${REGISTRY_REPOSITORY} ${DEPLOYMENT_FILE_PATH} | cut -d : -f 3)
                 sed -i -e "s/${OLD_IMAGE_TAG}/${NEW_IMAGE_TAG}/" ${DEPLOYMENT_FILE_PATH}
                 cat ${DEPLOYMENT_FILE_PATH}
                 
+                # Commit the changes to the git repository
                 git add .
-                git commit -m "Update Spring demo app version to ${NEW_IMAGE_TAG}"
-                git push -uf origin main 
+                git commit -m "Update spring-demo-app version to ${NEW_IMAGE_TAG}"
+                git push -uf origin ${GIT_BRANCH} 
               '''
             }
         }
