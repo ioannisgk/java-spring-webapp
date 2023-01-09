@@ -16,7 +16,7 @@ public class SpringAppApplication {
 	@RequestMapping(value = "/home", method = RequestMethod.GET)
 	public ModelAndView homePage() {
 
-		String data = "SPRING MVC APP";
+		String data = "SPRING MVC APP v1.0";
 
 		ModelAndView mv = new ModelAndView();
 
