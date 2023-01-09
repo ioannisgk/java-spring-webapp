@@ -51,7 +51,7 @@ pipeline {
         container('maven') {
           sh '''
             mvn -v
-            mvn clean install
+            #mvn clean install
           '''
         }
       }
@@ -61,7 +61,7 @@ pipeline {
         container('kaniko') {
           sh '''
             ls -last
-            /kaniko/executor --context . --destination ${REGISTRY_REPOSITORY}:${NEW_IMAGE_TAG}
+            #/kaniko/executor --context . --destination ${REGISTRY_REPOSITORY}:${NEW_IMAGE_TAG}
           '''
         }
       }
@@ -85,11 +85,11 @@ pipeline {
                 cd kubernetes-infrastructure
                 
                 OLD_IMAGE_TAG=$(grep -E ${REGISTRY_REPOSITORY} ${DEPLOYMENT_FILE_PATH} | cut -d : -f 3)
-                sed -ie "s/${OLD_IMAGE_TAG}/${NEW_IMAGE_TAG}/" ${DEPLOYMENT_FILE_PATH}
+                sed -i -e "s/${OLD_IMAGE_TAG}/${NEW_IMAGE_TAG}/" ${DEPLOYMENT_FILE_PATH}
                 
-                git add .
-                git commit -m "Update Spring demo app version to ${NEW_IMAGE_TAG}"
-                git push -uf origin main 
+                #git add .
+                #git commit -m "Update Spring demo app version to ${NEW_IMAGE_TAG}"
+                #git push -uf origin main 
               '''
             }
         }
