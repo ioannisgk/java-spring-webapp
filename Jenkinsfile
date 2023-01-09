@@ -86,7 +86,7 @@ pipeline {
                 ls -last
                 
                 grep -E ${REGISTRY_REPOSITORY} ${DEPLOYMENT_FILE_PATH}
-                awk -F',' '{print $3}' <<< "Eric,Male,28,USA"
+                echo "Eric,Male,28,USA" | awk -F',' '{print $3}'
                 
                 #sed -i "s/${NEW_IMAGE_TAG}/${OLD_IMAGE_TAG}/" ${DEPLOYMENT_FILE_PATH}
               '''
