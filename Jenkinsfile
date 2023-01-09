@@ -1,8 +1,8 @@
 pipeline {
   environment {
     REGISTRY_REPOSITORY = "ioannisgk/spring-demo"
-    GIT_EMAIL = "jenkins@email.com"
-    GIT_USERNAME = "jenkins"
+    GIT_EMAIL = "ioannisgk@live.com"
+    GIT_USERNAME = "ioannisgk"
     GIT_REPOSITORY = "github.com/ioannisgk/kubernetes-infrastructure.git"
     NEW_IMAGE_TAG = "v0.0${BUILD_NUMBER}"
     DEPLOYMENT_FILE_PATH = "development/spring-app-demo/spring-app-deployment.yaml"
@@ -86,9 +86,7 @@ pipeline {
                 
                 OLD_IMAGE_TAG=$(grep -E ${REGISTRY_REPOSITORY} ${DEPLOYMENT_FILE_PATH} | cut -d : -f 3)
                 sed -i -e "s/${OLD_IMAGE_TAG}/${NEW_IMAGE_TAG}/" ${DEPLOYMENT_FILE_PATH}
-                
-                #cat ${DEPLOYMENT_FILE_PATH}
-                #ls -last development/spring-app-demo/
+                cat ${DEPLOYMENT_FILE_PATH}
                 
                 git add .
                 git commit -m "Update Spring demo app version to ${NEW_IMAGE_TAG}"
