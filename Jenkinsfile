@@ -1,9 +1,11 @@
 pipeline {
   environment {
     REGISTRY_REPOSITORY = "ioannisgk/spring-demo"
-    GIT_EMAIL="jenkins@email.com"
-    GIT_USERNAME="jenkins"
-    GIT_REPOSITORY="github.com/ioannisgk/kubernetes-infrastructure.git"
+    GIT_EMAIL = "jenkins@email.com"
+    GIT_USERNAME = "jenkins"
+    GIT_REPOSITORY = "github.com/ioannisgk/kubernetes-infrastructure.git"
+    NEW_IMAGE_TAG = "v0.0${BUILD_NUMBER}"
+    DEPLOYMENT_FILE_PATH = "development/spring-app-demo/spring-app-deployment.yaml"
   }
   agent {
     kubernetes {
@@ -82,6 +84,8 @@ pipeline {
                 git branch -M main
                 cd kubernetes-infrastructure
                 ls -last
+                echo ${NEW_IMAGE_TAG}
+                echo ${DEPLOYMENT_FILE_PATH}
               '''
             }
         }
