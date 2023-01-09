@@ -1,4 +1,7 @@
 pipeline {
+  options {
+    buildDiscarder(logRotator(numToKeepStr: '30', artifactNumToKeepStr: '20'))
+  }
   environment {
     REGISTRY_REPOSITORY = "ioannisgk/spring-demo"
     GIT_EMAIL = "ioannisgk@live.com"
