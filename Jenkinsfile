@@ -86,8 +86,10 @@ pipeline {
                 ls -last
                 
                 OLD_IMAGE_TAG=$(grep -E ${REGISTRY_REPOSITORY} ${DEPLOYMENT_FILE_PATH} | cut -d : -f 3)
+                SED_PARAMETER="s/${OLD_IMAGE_TAG}/${NEW_IMAGE_TAG}/"
+                
                 #sed -i "s/${OLD_IMAGE_TAG}/${NEW_IMAGE_TAG}/" ${DEPLOYMENT_FILE_PATH} > a.txt
-                sed -i \'s/\'"${OLD_IMAGE_TAG}"'/'"${NEW_IMAGE_TAG}"\'/\' ${DEPLOYMENT_FILE_PATH} > a.txt
+                sed -i \'s/'"${OLD_IMAGE_TAG}"'/'"${NEW_IMAGE_TAG}"'/\' ${DEPLOYMENT_FILE_PATH} > a.txt
                 
                 cat a.txt
               '''
